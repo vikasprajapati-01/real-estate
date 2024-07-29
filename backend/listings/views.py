@@ -127,3 +127,72 @@ class SearchView(APIView):
                 if num_days > days_passed:
                     slug = query.slug
                     queryset = queryset.exclude(slug__iexact = slug)
+
+        has_photos = data['has_photos']
+        if has_photos == '1+':
+            has_photos = 1
+        elif has_photos == '3+':
+            has_photos = 3
+        elif has_photos == '5+':
+            has_photos = 5
+        elif has_photos == '10+':
+            has_photos = 10
+        elif has_photos == '15+':
+            has_photos = 15
+
+        for query in queryset:
+            count = 0
+            if query.photo_1:
+                count += 1
+            if query.photo_2:
+                count += 1
+            if query.photo_3:
+                count += 1
+            if query.photo_4:
+                count += 1
+            if query.photo_5:
+                count += 1
+            if query.photo_6:
+                count += 1
+            if query.photo_7:
+                count += 1
+            if query.photo_8:
+                count += 1
+            if query.photo_9:
+                count += 1
+            if query.photo_10:
+                count += 1
+            if query.photo_11:
+                count += 1
+            if query.photo_12:
+                count += 1
+            if query.photo_13:
+                count += 1
+            if query.photo_14:
+                count += 1
+            if query.photo_15:
+                count += 1
+            if query.photo_16:
+                count += 1
+            if query.photo_17:
+                count += 1
+            if query.photo_18:
+                count += 1
+            if query.photo_19:
+                count += 1
+            if query.photo_20:
+                count += 1
+
+            if count < has_photos:
+                slug = query.slug
+                queryset = queryset.exclude(slug__iexact = slug)
+
+        open_house = data['open_house']
+        queryset = queryset.filter(open_house__iexact = open_house)
+
+        keywords = data['keywords']
+        queryset = queryset.filter(description__icontains = keywords)
+
+        serializer = ListingSerializer(queryset, many=True)
+
+        return Response(serializer.data)

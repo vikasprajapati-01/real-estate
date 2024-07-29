@@ -9,7 +9,7 @@ class Listing(models.Model):
         HOUSE = 'House'
         CONDO = 'Condo'
 
-    class SaleType(models.Model):
+    class SaleType(models.TextChoices):
         FOR_RENT = 'For Rent'
         FOR_SALE = 'For Sale'
 
@@ -19,7 +19,7 @@ class Listing(models.Model):
     address = models.CharField(max_length=150)
     city = models.CharField(max_length=50)
     state = models.CharField(max_length=50)
-    pincode = models.CharField(10)
+    pincode = models.CharField(max_length=10)
     description = models.TextField(blank=True)
     sale_type = models.CharField(max_length=50, choices=SaleType.choices, default=SaleType.FOR_RENT)
     bedrooms = models.IntegerField()
